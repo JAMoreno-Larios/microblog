@@ -1,3 +1,5 @@
 # Files to be ignored from version control
 # We don't want to track Python cache
 **/__pycache__/
+# We probably don't want to track the database file itself.
+app.db
