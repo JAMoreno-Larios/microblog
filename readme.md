@@ -13,6 +13,7 @@ We have installed so far:
 - WTForms
 - Flask-SQLAlchemy
 - Flask-Migrate
+- Flask-Login
 
 ## Installation
 Pending
