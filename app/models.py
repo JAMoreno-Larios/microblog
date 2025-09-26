@@ -9,10 +9,13 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, LoginManager
 
 # Initialize SQLAlchemy instance
 db = SQLAlchemy()
+
+# Initialize Flask-Login's login manager
+login = LoginManager()
 
 
 class User(UserMixin, db.Model):
@@ -56,3 +59,9 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'<Post {self.body}'
+
+
+# We register a user loader function with Flask-Login
+@login.user_loader
+def load_user(id):
+    return db.session.get(User, int(id))

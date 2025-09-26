@@ -5,14 +5,12 @@ Microblog initialization file
 from flask import Flask
 from config import Config
 from flask_migrate import Migrate
-from flask_login import LoginManager
 from .routes import routes_bp
-from .models import db, User, Post
+from .models import db, login, User, Post
 
 
 # Instantiate extensions outside the application factory
 migrate = Migrate()
-login = LoginManager()
 
 
 def create_app(test_config=None):
