@@ -11,6 +11,7 @@ We have installed so far:
 - python-dotenv
 - Flask-WTF
 - WTForms
+- Flask-SQLAlchemy
 
 ## Installation
 Pending
