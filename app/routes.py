@@ -1,10 +1,13 @@
-from flask import render_template, flash, redirect, url_for
-from app import app
-from app.forms import LoginForm
+from flask import Blueprint, render_template, flash, redirect, url_for
+# from app import app
+from .forms import LoginForm
+
+# Define blueprint
+routes_bp = Blueprint('routes', __name__)
 
 
-@app.route('/')
-@app.route('/index')
+@routes_bp.route('/')
+@routes_bp.route('/index')
 def index():
     user = {'username': 'José'}
     posts = [
@@ -21,7 +24,7 @@ def index():
                            posts=posts)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@routes_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
