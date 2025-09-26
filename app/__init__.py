@@ -12,6 +12,7 @@ from .models import db, User, Post
 # Initialize extensions outside the application factory
 migrate = Migrate()
 
+
 def create_app(test_config=None):
     # Create and configure the Flask app
     app = Flask(__name__)
