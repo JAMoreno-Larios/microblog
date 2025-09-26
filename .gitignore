@@ -1,0 +1,3 @@
+# Files to be ignored from version control
+# We don't want to track Python cache
+**/__pychache__/
