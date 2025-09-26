@@ -12,6 +12,7 @@ We have installed so far:
 - Flask-WTF
 - WTForms
 - Flask-SQLAlchemy
+- Flask-Migrate
 
 ## Installation
 Pending
