@@ -80,6 +80,52 @@ class User(UserMixin, db.Model):
         return \
             f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
+    # Here we define functions related to followers
+    def follow(self, user):
+        if not self.is_following(user):
+            self.following.add(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.following.remove(user)
+
+    def is_following(self, user):
+        query = self.following.select().where(User.id == user.id)
+        return db.session.scalar(query) is not None
+
+    def followers_count(self):
+        query = sa.select(sa.func.count()).select_from(
+            self.followers.select().subquery()
+        )
+        return db.session.scalar(query)
+
+    def following_count(self):
+        query = sa.select(sa.func.count()).select_from(
+            self.following.select().subquery()
+        )
+        return db.session.scalar(query)
+
+    # We get the posts from followed users
+    def following_posts(self):
+        # Create alias for users
+        Author = so.aliased(User)
+        Follower = so.aliased(User)
+        # We define an SQL query that gets the data we want
+        # we show both own and followed posts
+        return (
+                sa.select(Post)
+                .join(Post.author.of_type(Author))
+                .join(Author.followers.of_type(Follower), isouter=True)
+                .where(
+                    sa.or_(
+                        Follower.id == self.id,
+                        Author.id == self.id,
+                    )
+                )
+                .group_by(Post)
+                .order_by(Post.timestamp.desc())
+        )
+
 
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
