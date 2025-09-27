@@ -166,3 +166,12 @@ def unfollow(username):
         return redirect(url_for('routes.user', username=username))
     else:
         return redirect(url_for('routes.index'))
+
+
+# Explore view function
+@routes_bp.route('/explore')
+@login_required
+def explore():
+    query = sa.select(Post).order_by(Post.timestamp.desc())
+    posts = db.session.scalars(query).all()
+    return render_template('index.html', title='Explore', posts=posts)
