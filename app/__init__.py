@@ -20,7 +20,10 @@ migrate = Migrate()
 def create_app(test_config=None):
     # Create and configure the Flask app
     app = Flask(__name__)
-    app.config.from_object(Config)
+    if test_config is None:
+        app.config.from_object(Config)
+    else:
+        app.config.from_object(test_config)
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)

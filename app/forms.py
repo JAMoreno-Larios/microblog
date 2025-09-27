@@ -70,8 +70,8 @@ class EditProfileForm(FlaskForm):
                     User.username == username.data
                 )
             )
-        if user is not None:
-            raise ValidationError('Please use a different username.')
+            if user is not None:
+                raise ValidationError('Please use a different username.')
 
 
 # Empty form for following and unfollowing

@@ -8,11 +8,25 @@ import unittest
 from app import create_app
 from app.models import db, User, Post
 
-# Create Flask app instance
-app = create_app()
 
-# Define the SQL database URL
-os.environ['DATABASE_URL'] = 'sqlite://'
+# Define our config here
+class Config:
+    """
+    Configuration class for our Flask app
+    """
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'adivina-adivinador'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'
+    # Add email support
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    ADMINS = ['agustin90m@gmail.com']
+
+
+# Create Flask app instance
+app = create_app(test_config=Config)
 
 
 # Define the User model test suite
