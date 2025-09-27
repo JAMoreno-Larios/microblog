@@ -14,6 +14,7 @@ We have installed so far:
 - Flask-SQLAlchemy
 - Flask-Migrate
 - Flask-Login
+- email-validator
 
 ## Installation
 Pending
