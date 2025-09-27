@@ -4,8 +4,9 @@ from urllib.parse import urlsplit
 from flask_login import (current_user, login_user,
                          logout_user, login_required)
 import sqlalchemy as sa
-from .models import db, User
-from .forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm
+from .models import db, User, Post
+from .forms import (LoginForm, RegistrationForm,
+                    EditProfileForm, EmptyForm, PostForm)
 from datetime import datetime, timezone
 
 # Define blueprint
@@ -14,22 +15,22 @@ routes_bp = Blueprint('routes', __name__)
 
 # We define the routing here
 # Index/landing page
-@routes_bp.route('/')
-@routes_bp.route('/index')
+@routes_bp.route('/', methods=['GET', 'POST'])
+@routes_bp.route('/index', methods=['GET', 'POST'])
 @login_required  # We require users to login before viewing this
 def index():
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Diana'},
-            'body': 'Que fuerte la película de Kimetsu no Yaiba'
-        },
-    ]
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('routes.index'))
 
-    return render_template('index.html', title='Home Page', posts=posts)
+    posts = db.session.scalars(current_user.following_posts()).all()
+
+    return render_template('index.html', title='Home Page',
+                           form=form, posts=posts)
 
 
 # Login page
