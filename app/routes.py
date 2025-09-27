@@ -6,6 +6,7 @@ from flask_login import (current_user, login_user,
 import sqlalchemy as sa
 from .models import db, User
 from .forms import LoginForm, RegistrationForm
+from datetime import datetime, timezone
 
 # Define blueprint
 routes_bp = Blueprint('routes', __name__)
@@ -86,3 +87,11 @@ def user(username):
             {'author': user, 'body': "Post prueba #2"}
     ]
     return render_template('user.html', user=user, posts=posts)
+
+
+# Record time of last visit
+@routes_bp.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.now(timezone.utc)
+        db.session.commit()
