@@ -8,10 +8,11 @@ import unittest
 from app import create_app
 from app.models import db, User, Post
 
-# Define the SQL database URL
-os.environ['DATABASE_URL'] = 'sqlite://'
 # Create Flask app instance
 app = create_app()
+
+# Define the SQL database URL
+os.environ['DATABASE_URL'] = 'sqlite://'
 
 
 # Define the User model test suite
