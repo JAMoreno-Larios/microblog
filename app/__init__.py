@@ -6,6 +6,7 @@ from flask import Flask
 from config import Config
 from flask_migrate import Migrate
 from .routes import routes_bp
+from .errors import errors_bp
 from .models import db, login, User, Post
 
 
@@ -23,6 +24,7 @@ def create_app(test_config=None):
     login.init_app(app)
     # Register blueprints
     app.register_blueprint(routes_bp)
+    app.register_blueprint(errors_bp)
     # Force users to login when viewing protected pages
     login.login_view = 'routes.login'
     return app
