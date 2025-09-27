@@ -12,6 +12,7 @@ routes_bp = Blueprint('routes', __name__)
 
 
 # We define the routing here
+# Index/landing page
 @routes_bp.route('/')
 @routes_bp.route('/index')
 @login_required  # We require users to login before viewing this
@@ -30,6 +31,7 @@ def index():
     return render_template('index.html', title='Home Page', posts=posts)
 
 
+# Login page
 @routes_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -50,12 +52,14 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
+# Logout page
 @routes_bp.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('routes.index'))
 
 
+# Register form page
 @routes_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -70,3 +74,15 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('routes.login'))
     return render_template('register.html', title='Register', form=form)
+
+
+# User profile page
+@routes_bp.route('/user/<username>')
+@login_required
+def user(username):
+    user = db.first_or_404(sa.select(User).where(User.username == username))
+    posts = [
+            {'author': user, 'body': "Post prueba #1"},
+            {'author': user, 'body': "Post prueba #2"}
+    ]
+    return render_template('user.html', user=user, posts=posts)
