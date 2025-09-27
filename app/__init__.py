@@ -23,4 +23,6 @@ def create_app(test_config=None):
     login.init_app(app)
     # Register blueprints
     app.register_blueprint(routes_bp)
+    # Force users to login when viewing protected pages
+    login.login_view = 'routes.login'
     return app
