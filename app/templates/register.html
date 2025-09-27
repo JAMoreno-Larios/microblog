@@ -14,7 +14,7 @@
 	<p>
 	    {{ form.email.label }}<br>
 	    {{ form.email(size=64) }}<br>
-	    {% for error in form.username.errors %}
+	    {% for error in form.email.errors %}
 	    <span style="color: red;">[{{ error }}]</span>
 	    {% endfor %}
         </p>
