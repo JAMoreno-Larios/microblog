@@ -1,16 +1,22 @@
 """
 forms.py
 
-We handle both login and registration forms using Flask-WTF
+We define how we handle forms for our Microblog
 """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms import (
+    StringField, PasswordField, BooleanField, SubmitField,
+    TextAreaField
+)
+from wtforms.validators import (
+    DataRequired, ValidationError, Email, EqualTo, Length
+)
 import sqlalchemy as sa
 from .models import db, User
 
 
+# Login form
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -18,6 +24,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 
+# Registration form
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -44,3 +51,10 @@ class RegistrationForm(FlaskForm):
         )
         if user is not None:
             raise ValidationError('Please use a different email address.')
+
+
+# Profile edition form
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    submit = SubmitField('Submit')
