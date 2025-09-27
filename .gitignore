@@ -3,6 +3,7 @@
 **/__pycache__/
 # We probably don't want to track the database file itself.
 app.db
+app.db.back
 # We certainly don't want to track log files
 **/*.log
 logs/**
