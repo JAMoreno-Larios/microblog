@@ -36,8 +36,15 @@ def index():
                         per_page=current_app.config['POSTS_PER_PAGE'],
                         error_out=False)
 
+    # Add navigation arrows
+    next_url = url_for('routes.index', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('routes.index', page=posts.prev_num) \
+        if posts.has_prev else None
+
     return render_template('index.html', title='Home Page',
-                           form=form, posts=posts.items)
+                           form=form, posts=posts.items,
+                           next_url=next_url, prev_url=prev_url)
 
 
 # Login page
@@ -184,4 +191,11 @@ def explore():
     posts = db.paginate(query, page=page,
                         per_page=current_app.config['POSTS_PER_PAGE'],
                         error_out=False)
-    return render_template('index.html', title='Explore', posts=posts.items)
+    # Add navigation arrows
+    next_url = url_for('routes.explore', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('routes.explore', page=posts.prev_num) \
+        if posts.has_prev else None
+
+    return render_template('index.html', title='Explore', posts=posts.items,
+                           next_url=next_url, prev_url=prev_url)
