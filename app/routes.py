@@ -1,5 +1,7 @@
-from flask import (Blueprint, render_template,
-                   flash, redirect, url_for, request)
+from flask import (
+    Blueprint, render_template,
+    flash, redirect, url_for, request, current_app
+)
 from urllib.parse import urlsplit
 from flask_login import (current_user, login_user,
                          logout_user, login_required)
@@ -27,10 +29,15 @@ def index():
         flash('Your post is now live!')
         return redirect(url_for('routes.index'))
 
-    posts = db.session.scalars(current_user.following_posts()).all()
+    # Pagination
+    page = request.args.get('page', 1, type=int)
+    posts = db.paginate(current_user.following_posts(),
+                        page=page,
+                        per_page=current_app.config['POSTS_PER_PAGE'],
+                        error_out=False)
 
     return render_template('index.html', title='Home Page',
-                           form=form, posts=posts)
+                           form=form, posts=posts.items)
 
 
 # Login page
@@ -172,6 +179,9 @@ def unfollow(username):
 @routes_bp.route('/explore')
 @login_required
 def explore():
+    page = request.args.get('page', 1, type=int)
     query = sa.select(Post).order_by(Post.timestamp.desc())
-    posts = db.session.scalars(query).all()
-    return render_template('index.html', title='Explore', posts=posts)
+    posts = db.paginate(query, page=page,
+                        per_page=current_app.config['POSTS_PER_PAGE'],
+                        error_out=False)
+    return render_template('index.html', title='Explore', posts=posts.items)
