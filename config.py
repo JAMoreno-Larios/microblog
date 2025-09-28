@@ -25,4 +25,4 @@ class Config:
     ADMINS = ['agustin90m@gmail.com']
 
     # Pagination
-    POSTS_PER_PAGE = 3
+    POSTS_PER_PAGE = 25
