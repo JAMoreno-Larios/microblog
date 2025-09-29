@@ -11,6 +11,7 @@ import os
 from .routes import routes_bp
 from .errors import errors_bp
 from .models import db, login, User, Post
+from .email import mail
 
 
 # Instantiate extensions outside the application factory
@@ -27,6 +28,7 @@ def create_app(test_config=None):
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
+    mail.init_app(app)
     login.init_app(app)
     # Register blueprints
     app.register_blueprint(routes_bp)
