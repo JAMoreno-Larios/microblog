@@ -5,6 +5,7 @@ Microblog initialization file
 from flask import Flask
 from config import Config
 from flask_migrate import Migrate
+from flask_moment import Moment
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
@@ -16,6 +17,7 @@ from .email import mail
 
 # Instantiate extensions outside the application factory
 migrate = Migrate()
+moment = Moment()
 
 
 def create_app(test_config=None):
@@ -28,6 +30,7 @@ def create_app(test_config=None):
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
+    moment.init_app(app)
     mail.init_app(app)
     login.init_app(app)
     # Register blueprints
