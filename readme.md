@@ -16,6 +16,7 @@ We have installed so far:
 - Flask-Login
 - Flask-Moment
 - email-validator
+- langdetect
 
 ## Installation
 Pending
