@@ -14,6 +14,7 @@ from .routes import routes_bp
 from .errors import errors_bp
 from .models import db, login, User, Post
 from .email import mail
+from .cli import translate_bp
 
 
 # Instantiate extensions outside the application factory
@@ -45,6 +46,7 @@ def create_app(test_config=None):
     # Register blueprints
     app.register_blueprint(routes_bp)
     app.register_blueprint(errors_bp)
+    app.register_blueprint(translate_bp)
     # Force users to login when viewing protected pages
     login.login_view = 'routes.login'
     login.login_message = _l('Please log in to access this page.')
