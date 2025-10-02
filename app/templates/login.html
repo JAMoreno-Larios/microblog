@@ -2,17 +2,17 @@
 {% import "bootstrap_wtf.html" as wtf %}
 
 {% block content %}
-	<h1>Sign In</h1>
+    <h1>{{ _('Sign In') }}</h1>
 	{{ wtf.quick_form(form) }}
 	<p>
-		New User? <a href="{{ url_for('routes.register') }}">
-			Click to register!
+	{{ _('New User?') }} <a href="{{ url_for('routes.register') }}">
+		{{ _('Click to register!') }}
 		</a>
 	</p>
 	<p>
-        Forgot Your Password?
+	{{ _('Forgot Your Password?') }}
         <a href="{{ url_for('routes.reset_password_request') }}">
-			Click to Reset It
+			{{ _('Click to Reset It') }}
 		</a>
     </p>
 {% endblock %}

@@ -5,9 +5,11 @@ with python-dotenv
 """
 
 import os
+from dataclasses import dataclass
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
+@dataclass
 class Config:
     """
     Configuration class for our Flask app
@@ -26,3 +28,10 @@ class Config:
 
     # Pagination
     POSTS_PER_PAGE = 25
+
+    # Supported languages via Flask-Babel
+    LANGUAGES = ['en', 'es']
+
+    def __class_getitem__(self, item):
+        # Makes our class subscriptable
+        return getattr(self, item)

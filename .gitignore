@@ -7,3 +7,5 @@ app.db.back
 # We certainly don't want to track log files
 **/*.log
 logs/**
+# We don't want to track the extracted messages file generated with pybabel
+**/*.pot

@@ -2,10 +2,11 @@
 Microblog initialization file
 """
 
-from flask import Flask
+from flask import Flask, request
 from config import Config
 from flask_migrate import Migrate
 from flask_moment import Moment
+from flask_babel import Babel, lazy_gettext as _l
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
@@ -18,8 +19,15 @@ from .email import mail
 # Instantiate extensions outside the application factory
 migrate = Migrate()
 moment = Moment()
+babel = Babel()
 
 
+# Define a function to get the locales
+def get_locale():
+    return request.accept_languages.best_match(Config['LANGUAGES'])
+
+
+# Define the application factory
 def create_app(test_config=None):
     # Create and configure the Flask app
     app = Flask(__name__)
@@ -33,11 +41,13 @@ def create_app(test_config=None):
     moment.init_app(app)
     mail.init_app(app)
     login.init_app(app)
+    babel.init_app(app, locale_selector=get_locale)
     # Register blueprints
     app.register_blueprint(routes_bp)
     app.register_blueprint(errors_bp)
     # Force users to login when viewing protected pages
     login.login_view = 'routes.login'
+    login.login_message = _l('Please log in to access this page.')
 
     """
     The following block enables logging when running without
