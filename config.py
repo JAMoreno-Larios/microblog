@@ -5,8 +5,12 @@ with python-dotenv
 """
 
 import os
+from dotenv import load_dotenv
 from dataclasses import dataclass
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+# Load additional environmental variables
+load_dotenv()
 
 
 @dataclass
@@ -31,6 +35,10 @@ class Config:
 
     # Supported languages via Flask-Babel
     LANGUAGES = ['en', 'es']
+
+    # Microsoft translator API key
+    MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
+    MS_TRANSLATOR_LOCATION = os.environ.get('MS_TRANSLATOR_LOCATION')
 
     def __class_getitem__(self, item):
         # Makes our class subscriptable

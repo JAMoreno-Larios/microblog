@@ -9,3 +9,5 @@ app.db.back
 logs/**
 # We don't want to track the extracted messages file generated with pybabel
 **/*.pot
+# We don't want to include the file where our API keys are declared
+**/.env

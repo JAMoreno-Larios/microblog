@@ -15,6 +15,7 @@ from .errors import errors_bp
 from .models import db, login, User, Post
 from .email import mail
 from .cli import translate_bp
+from .translate import translate
 
 
 # Instantiate extensions outside the application factory

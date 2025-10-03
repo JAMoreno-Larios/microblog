@@ -3,7 +3,6 @@ Flask Command-Line Interface custom commands
 """
 
 from flask import Blueprint
-from flask.cli import with_appcontext
 import os
 import click
 
