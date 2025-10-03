@@ -2,37 +2,27 @@
 User model unit tests for Microblog.
 """
 
-import os
 from datetime import datetime, timezone, timedelta
 import unittest
 from app import create_app
 from app.models import db, User, Post
+from config import Config
 
 
 # Define our config here
-class Config:
-    """
-    Configuration class for our Flask app
-    """
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'adivina-adivinador'
+class TestConfig(Config):
+    TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'
-    # Add email support
-    MAIL_SERVER = os.environ.get('MAIL_SERVER')
-    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['agustin90m@gmail.com']
 
 
 # Create Flask app instance
-app = create_app(test_config=Config)
 
 
 # Define the User model test suite
 class UserModelCase(unittest.TestCase):
     def setUp(self):
-        self.app_context = app.app_context()
+        self.app = create_app(test_config=TestConfig)
+        self.app_context = self.app.app_context()
         self.app_context.push()
         db.create_all()
 
