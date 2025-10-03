@@ -10,9 +10,9 @@ from flask_babel import Babel, lazy_gettext as _l
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
-from .routes import routes_bp
 from app.errors import errors_bp
 from app.auth import auth_bp
+from app.main import routes_bp
 from .models import db, login, User, Post
 from .email import mail
 from .cli import translate_bp

@@ -5,11 +5,11 @@ from flask import (
 from flask_login import current_user, login_required
 from flask_babel import get_locale
 import sqlalchemy as sa
-from .models import db, User, Post
+from app.models import db, User, Post
 from .forms import EditProfileForm, EmptyForm, PostForm
 from datetime import datetime, timezone
 from langdetect import detect, LangDetectException
-from .translate import translate
+from app.translate import translate
 
 # Define blueprint
 routes_bp = Blueprint('routes', __name__)

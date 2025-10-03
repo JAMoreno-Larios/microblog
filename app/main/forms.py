@@ -13,7 +13,7 @@ from wtforms.validators import (
     DataRequired, ValidationError, Length
 )
 import sqlalchemy as sa
-from .models import db, User
+from app.models import db, User
 
 
 # Profile edition form
