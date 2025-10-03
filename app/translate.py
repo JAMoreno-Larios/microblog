@@ -18,7 +18,7 @@ def translate(text, source_language, dest_language):
             current_app.config['MS_TRANSLATOR_KEY'],
             'Ocp-Apim-Subscription-Region':
             current_app.config['MS_TRANSLATOR_LOCATION'],
-            'Content-Type': 'application/json; charset=UTF-8'
+            #'Content-Type': 'application/json; charset=UTF-8'
     }
     r = requests.post(
         'https://api.cognitive.microsofttranslator.com'

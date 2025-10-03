@@ -261,7 +261,7 @@ def reset_password(token):
 @login_required
 def translate_text():
     data = request.get_json()
-    return {'text', translate(
+    return {'text': translate(
                     data['text'],
                     data['source_language'],
                     data['dest_language']
