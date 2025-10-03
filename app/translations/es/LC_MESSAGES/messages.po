@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-01 19:47-0600\n"
+"POT-Creation-Date: 2025-10-02 20:16-0600\n"
 "PO-Revision-Date: 2025-10-01 18:01-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/__init__.py:52
+#: app/__init__.py:53
 msgid "Please log in to access this page."
 msgstr "Inicie sesión para acceder a la página"
 
@@ -78,6 +78,14 @@ msgstr "Diga algo"
 msgid "Request Password Reset"
 msgstr "Solicite reestablecer su contraseña"
 
+#: app/translate.py:15
+msgid "Error: the translation service is not configured."
+msgstr "Error: el servicio de traducción no ha sido configurado."
+
+#: app/translate.py:32
+msgid "Error: the translation service failed."
+msgstr "Error: el servicio de traducción falló"
+
 #: app/templates/404.html:5
 msgid "Not Found"
 msgstr "No encontrado"
@@ -98,6 +106,10 @@ msgstr "Se ha notificado al administrador. ¡Perdón por el inconveniente!"
 #, python-format
 msgid "%(username)s said %(when)s"
 msgstr "%(username)s dijo %(when)s"
+
+#: app/templates/_post.html:26
+msgid "Translate"
+msgstr "Traducción"
 
 #: app/templates/base.html:9
 msgid "Welcome to Microblog"
