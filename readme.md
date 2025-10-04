@@ -18,9 +18,27 @@ We have installed so far:
 - email-validator
 - langdetect
 - requests
+- elasticsearch
 
 ## Installation
 Pending
 
 # Execution
 Run `flask run` on the top-level directory
+
+
+To install the Elasticsearch engine in Docker:
+```bash
+$ sudo docker network create elastic
+$ sudo docker pull docker.elastic.co/elasticsearch/elasticsearch:9.1.4
+```
+
+To start the Elasticsearch engine with Docker, run
+
+```bash
+$ sudo docker run --name elasticsearch --network elastic \
+--rm -p 9200:9200 --memory 2GB -e discovery.type=single-node \
+-e xpack.security.enabled=false \
+-t docker.elastic.co/elasticsearch/elasticsearch:9.1.4
+
+```
