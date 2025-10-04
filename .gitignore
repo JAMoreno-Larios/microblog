@@ -11,3 +11,5 @@ logs/**
 **/*.pot
 # We don't want to include the file where our API keys are declared
 **/.env
+# We want to exclude the local VMs generated with Vagrant
+**/.vagrant/**
