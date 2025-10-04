@@ -10,6 +10,7 @@ from flask_babel import Babel, lazy_gettext as _l
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
+from elasticsearch import Elasticsearch
 from app.errors import errors_bp
 from app.auth import auth_bp
 from app.main import routes_bp
@@ -50,6 +51,9 @@ def create_app(test_config=None):
     app.register_blueprint(errors_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(translate_bp)
+    # Initialize Elasticsearch
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
     # Force users to login when viewing protected pages
     login.login_view = 'auth.login'
     login.login_message = _l('Please log in to access this page.')

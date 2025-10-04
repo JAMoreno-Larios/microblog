@@ -40,6 +40,9 @@ class Config:
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
     MS_TRANSLATOR_LOCATION = os.environ.get('MS_TRANSLATOR_LOCATION')
 
+    # Elasticsearch
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+
     def __class_getitem__(self, item):
         # Makes our class subscriptable
         return getattr(self, item)
