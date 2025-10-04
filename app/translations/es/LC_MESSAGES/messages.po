@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-02 20:16-0600\n"
-"PO-Revision-Date: 2025-10-01 18:01-0600\n"
+"POT-Creation-Date: 2025-10-04 12:14-0600\n"
+"PO-Revision-Date: 2025-10-04 12:04-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
 "Language-Team: es <LL@li.org>\n"
@@ -18,65 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/__init__.py:53
+#: app/__init__.py:59
 msgid "Please log in to access this page."
 msgstr "Inicie sesión para acceder a la página"
-
-#: app/email.py:35
-msgid "[Microblog] Reset Your Password"
-msgstr "[Microblog] Restablesca su contraseña"
-
-#: app/forms.py:22 app/forms.py:30 app/forms.py:61
-msgid "Username"
-msgstr "Nombre de usuario"
-
-#: app/forms.py:23 app/forms.py:32 app/forms.py:102
-msgid "Password"
-msgstr "Contraseña"
-
-#: app/forms.py:24
-msgid "Remember me"
-msgstr "Recordarme"
-
-#: app/forms.py:25 app/templates/login.html:5
-msgid "Sign In"
-msgstr "Iniciar sesión"
-
-#: app/forms.py:31 app/forms.py:96
-msgid "Email"
-msgstr "Correo electrónico"
-
-#: app/forms.py:34 app/forms.py:104
-msgid "Repeat Password"
-msgstr "Repita su contraseña"
-
-#: app/forms.py:38 app/templates/register.html:5
-msgid "Register"
-msgstr "Inscríbase"
-
-#: app/forms.py:47 app/forms.py:79
-msgid "Please use a different username."
-msgstr "Use un nombre de usuario diferente, por favor."
-
-#: app/forms.py:56
-msgid "Please use a different email address."
-msgstr "Use un correo electrónico diferente, por favor."
-
-#: app/forms.py:62
-msgid "About me"
-msgstr "Acerca de mí"
-
-#: app/forms.py:64 app/forms.py:84 app/forms.py:91
-msgid "Submit"
-msgstr "Enviar"
-
-#: app/forms.py:89
-msgid "Say something"
-msgstr "Diga algo"
-
-#: app/forms.py:97 app/forms.py:106
-msgid "Request Password Reset"
-msgstr "Solicite reestablecer su contraseña"
 
 #: app/translate.py:15
 msgid "Error: the translation service is not configured."
@@ -86,21 +30,111 @@ msgstr "Error: el servicio de traducción no ha sido configurado."
 msgid "Error: the translation service failed."
 msgstr "Error: el servicio de traducción falló"
 
-#: app/templates/404.html:5
+#: app/auth/email.py:13
+msgid "[Microblog] Reset Your Password"
+msgstr "[Microblog] Restablesca su contraseña"
+
+#: app/auth/forms.py:19 app/auth/forms.py:27 app/main/forms.py:22
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: app/auth/forms.py:20 app/auth/forms.py:29 app/auth/forms.py:64
+msgid "Password"
+msgstr "Contraseña"
+
+#: app/auth/forms.py:21
+msgid "Remember me"
+msgstr "Recordarme"
+
+#: app/auth/forms.py:22 app/auth/templates/auth/login.html:5
+msgid "Sign In"
+msgstr "Iniciar sesión"
+
+#: app/auth/forms.py:28 app/auth/forms.py:58
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: app/auth/forms.py:31 app/auth/forms.py:66
+msgid "Repeat Password"
+msgstr "Repita su contraseña"
+
+#: app/auth/forms.py:35 app/auth/templates/auth/register.html:5
+msgid "Register"
+msgstr "Inscríbase"
+
+#: app/auth/forms.py:44 app/main/forms.py:39
+msgid "Please use a different username."
+msgstr "Use un nombre de usuario diferente, por favor."
+
+#: app/auth/forms.py:53
+msgid "Please use a different email address."
+msgstr "Use un correo electrónico diferente, por favor."
+
+#: app/auth/forms.py:59 app/auth/forms.py:68
+msgid "Request Password Reset"
+msgstr "Solicite reestablecer su contraseña"
+
+#: app/auth/templates/auth/login.html:8
+#, fuzzy
+msgid "New User?"
+msgstr "¿Nuevo aquí?"
+
+#: app/auth/templates/auth/login.html:9
+#, fuzzy
+msgid "Click to register!"
+msgstr "Inscríbase"
+
+#: app/auth/templates/auth/login.html:13
+#, fuzzy
+msgid "Forgot Your Password?"
+msgstr "¿Olvidó su contraseña?"
+
+#: app/auth/templates/auth/login.html:15
+msgid "Click to Reset It"
+msgstr "Haga click para para reestablecerla"
+
+#: app/auth/templates/auth/reset_password.html:5
+#, fuzzy
+msgid "Reset Your Password"
+msgstr "Restablezca su contraseña"
+
+#: app/auth/templates/auth/reset_password_request.html:5
+#, fuzzy
+msgid "Reset Password"
+msgstr "Restablezca la contraseña"
+
+#: app/errors/templates/errors/404.html:5
 msgid "Not Found"
 msgstr "No encontrado"
 
-#: app/templates/404.html:6 app/templates/500.html:9
+#: app/errors/templates/errors/404.html:6
+#: app/errors/templates/errors/500.html:9
 msgid "Back"
 msgstr "Atrás"
 
-#: app/templates/500.html:5
+#: app/errors/templates/errors/500.html:5
 msgid "An unexpected error has occurred"
 msgstr "Un error inesperado ha ocurrido"
 
-#: app/templates/500.html:7
+#: app/errors/templates/errors/500.html:7
 msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr "Se ha notificado al administrador. ¡Perdón por el inconveniente!"
+
+#: app/main/forms.py:23
+msgid "About me"
+msgstr "Acerca de mí"
+
+#: app/main/forms.py:25 app/main/forms.py:44 app/main/forms.py:51
+msgid "Submit"
+msgstr "Enviar"
+
+#: app/main/forms.py:49
+msgid "Say something"
+msgstr "Diga algo"
+
+#: app/main/forms.py:56 app/main/routes.py:203
+msgid "Search"
+msgstr "Usuario"
 
 #: app/templates/_post.html:15
 #, python-format
@@ -121,17 +155,17 @@ msgstr "Inicio"
 
 #: app/templates/base.html:30
 msgid "Explore"
-msgstr "Explore"
+msgstr "Explorar"
 
-#: app/templates/base.html:36
+#: app/templates/base.html:46
 msgid "Login"
 msgstr "Inicie sesión"
 
-#: app/templates/base.html:40
+#: app/templates/base.html:50
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/base.html:43
+#: app/templates/base.html:53
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -144,37 +178,19 @@ msgstr "Editar perfil"
 msgid "Hi, %(username)s!"
 msgstr "¡Hola, %(username)s!"
 
-#: app/templates/index.html:16 app/templates/user.html:60
+#: app/templates/index.html:16 app/templates/search.html:12
+#: app/templates/user.html:60
 msgid "Newer posts"
 msgstr "Nuevas publicaciones"
 
-#: app/templates/index.html:21 app/templates/user.html:65
+#: app/templates/index.html:21 app/templates/search.html:17
+#: app/templates/user.html:65
 msgid "Older posts"
 msgstr "Publicaciones anteriores"
 
-#: app/templates/login.html:8
-msgid "New User?"
-msgstr "¿Nuevo usuario?"
-
-#: app/templates/login.html:9
-msgid "Click to register!"
-msgstr "¡Haga clíck para inscribirse!"
-
-#: app/templates/login.html:13
-msgid "Forgot Your Password?"
-msgstr "¿Olvidó su contraseña?"
-
-#: app/templates/login.html:15
-msgid "Click to Reset It"
-msgstr "Haga click para reestablecerla"
-
-#: app/templates/reset_password.html:5
-msgid "Reset Your Password"
-msgstr "Restablezca su contraseña"
-
-#: app/templates/reset_password_request.html:5
-msgid "Reset Password"
-msgstr "Restablezca su contraseña"
+#: app/templates/search.html:4
+msgid "Search Results"
+msgstr "Resultados de la búsqueda"
 
 #: app/templates/user.html:8
 msgid "User"
@@ -205,4 +221,13 @@ msgstr "Seguir"
 #: app/templates/user.html:44
 msgid "Unfollow"
 msgstr "Dejar de seguir"
+
+#~ msgid "Not Found"
+#~ msgstr "No encontrado"
+
+#~ msgid "Back"
+#~ msgstr "Atrás"
+
+#~ msgid "An unexpected error has occurred"
+#~ msgstr ""
 
