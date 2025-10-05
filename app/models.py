@@ -15,6 +15,8 @@ from flask_login import UserMixin, LoginManager
 from hashlib import md5
 import jwt
 from .search import add_to_index, remove_from_index, query_index
+import json
+
 
 # Initialize SQLAlchemy instance
 db = SQLAlchemy()
@@ -122,6 +124,10 @@ class User(UserMixin, db.Model):
         foreign_keys='Message.sender_id', back_populates='author')
     messages_received: so.WriteOnlyMapped['Message'] = so.relationship(
         foreign_keys='Message.recipient_id', back_populates='recipient')
+
+    # Add notification support
+    notifications: so.WriteOnlyMapped['Notification'] = so.relationship(
+        back_populates='user')
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -232,6 +238,7 @@ class Post(SearchableMixin, db.Model):
         return f'<Post {self.body}'
 
 
+# Message model
 class Message(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     sender_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
@@ -251,6 +258,22 @@ class Message(db.Model):
 
     def __repr__(self):
         return '<Message {}>'.format(self.body)
+
+
+# Notification model
+class Notification(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    name: so.Mapped[str] = so.mapped_column(sa.string(128), index=True)
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(user.id),
+                                               index=True)
+    timestamp: so.Mapped[float] = so.mapped_column(index=True, default=time)
+    payload_json: so.Mapped[str] = so.mapped_column(sa.Text)
+
+    user: so.Mapped[User] = so.relationship(back_populates='notifications')
+
+    def get_data(self):
+        return json.loads(str(self.payload_json))
+
 
 
 # We register a user loader function with Flask-Login
