@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-04 12:14-0600\n"
+"POT-Creation-Date: 2025-10-05 09:17-0600\n"
 "PO-Revision-Date: 2025-10-04 12:04-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -125,6 +125,7 @@ msgid "About me"
 msgstr "Acerca de mí"
 
 #: app/main/forms.py:25 app/main/forms.py:44 app/main/forms.py:51
+#: app/main/forms.py:70
 msgid "Submit"
 msgstr "Enviar"
 
@@ -132,9 +133,21 @@ msgstr "Enviar"
 msgid "Say something"
 msgstr "Diga algo"
 
-#: app/main/forms.py:56 app/main/routes.py:203
+#: app/main/forms.py:56 app/main/routes.py:204
 msgid "Search"
 msgstr "Usuario"
+
+#: app/main/forms.py:68
+msgid "Message"
+msgstr "Mensaje"
+
+#: app/main/routes.py:228
+msgid "Your message has been sent."
+msgstr "Su mensaje ha sido enviado."
+
+#: app/main/routes.py:230
+msgid "Send Message"
+msgstr "Enviar mensaje"
 
 #: app/templates/_post.html:15
 #, python-format
@@ -161,11 +174,15 @@ msgstr "Explorar"
 msgid "Login"
 msgstr "Inicie sesión"
 
-#: app/templates/base.html:50
+#: app/templates/base.html:52 app/templates/messages.html:4
+msgid "Messages"
+msgstr "Mensajes"
+
+#: app/templates/base.html:56
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/base.html:53
+#: app/templates/base.html:59
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -179,14 +196,24 @@ msgid "Hi, %(username)s!"
 msgstr "¡Hola, %(username)s!"
 
 #: app/templates/index.html:16 app/templates/search.html:12
-#: app/templates/user.html:60
+#: app/templates/user.html:69
 msgid "Newer posts"
 msgstr "Nuevas publicaciones"
 
 #: app/templates/index.html:21 app/templates/search.html:17
-#: app/templates/user.html:65
+#: app/templates/user.html:74
 msgid "Older posts"
 msgstr "Publicaciones anteriores"
+
+#: app/templates/messages.html:12
+#, fuzzy
+msgid "Newer messages"
+msgstr "Nuevos mensajes"
+
+#: app/templates/messages.html:17
+#, fuzzy
+msgid "Older messages"
+msgstr "Mensajes anteriores"
 
 #: app/templates/search.html:4
 msgid "Search Results"
@@ -196,16 +223,16 @@ msgstr "Resultados de la búsqueda"
 msgid "User"
 msgstr "Usuario"
 
-#: app/templates/user.html:13
+#: app/templates/user.html:13 app/templates/user_popup.html:10
 msgid "Last seen on"
 msgstr "Visto por última vez el"
 
-#: app/templates/user.html:16
+#: app/templates/user.html:16 app/templates/user_popup.html:13
 #, python-format
 msgid "%(count)d followers"
 msgstr "%(count)d seguidores"
 
-#: app/templates/user.html:16
+#: app/templates/user.html:16 app/templates/user_popup.html:13
 #, python-format
 msgid "%(count)d following"
 msgstr "%(count)d seguidos"
@@ -214,20 +241,14 @@ msgstr "%(count)d seguidos"
 msgid "Edit your profile"
 msgstr "Edite su perfil"
 
-#: app/templates/user.html:33
+#: app/templates/user.html:33 app/templates/user_popup.html:22
 msgid "Follow"
 msgstr "Seguir"
 
-#: app/templates/user.html:44
+#: app/templates/user.html:44 app/templates/user_popup.html:31
 msgid "Unfollow"
 msgstr "Dejar de seguir"
 
-#~ msgid "Not Found"
-#~ msgstr "No encontrado"
-
-#~ msgid "Back"
-#~ msgstr "Atrás"
-
-#~ msgid "An unexpected error has occurred"
-#~ msgstr ""
-
+#: app/templates/user.html:53
+msgid "Send private message"
+msgstr "Mandar mensaje privado"
