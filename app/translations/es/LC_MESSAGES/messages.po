@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-05 09:17-0600\n"
+"POT-Creation-Date: 2025-10-05 09:35-0600\n"
 "PO-Revision-Date: 2025-10-04 12:04-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -205,12 +205,12 @@ msgstr "Nuevas publicaciones"
 msgid "Older posts"
 msgstr "Publicaciones anteriores"
 
-#: app/templates/messages.html:12
+#: app/templates/messages.html:13
 #, fuzzy
 msgid "Newer messages"
 msgstr "Nuevos mensajes"
 
-#: app/templates/messages.html:17
+#: app/templates/messages.html:18
 #, fuzzy
 msgid "Older messages"
 msgstr "Mensajes anteriores"
@@ -218,6 +218,11 @@ msgstr "Mensajes anteriores"
 #: app/templates/search.html:4
 msgid "Search Results"
 msgstr "Resultados de la búsqueda"
+
+#: app/templates/send_message.html:6
+#, python-format
+msgid "Send Message to %(recipient)s"
+msgstr "Mande un mensaje a %(recipient)s"
 
 #: app/templates/user.html:8
 msgid "User"
@@ -252,3 +257,4 @@ msgstr "Dejar de seguir"
 #: app/templates/user.html:53
 msgid "Send private message"
 msgstr "Mandar mensaje privado"
+
