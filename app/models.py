@@ -218,6 +218,14 @@ class User(UserMixin, db.Model):
         return db.session.scalar(sa.select(sa.func.count()).select_from(
                                  query.subquery()))
 
+    # Notification helper method
+    def add_notification(self, name, data):
+        db.session.execute(self.notifications.delete().where(
+                           Notification.name == name))
+        n = Notification(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(n)
+        return n
+
 
 class Post(SearchableMixin, db.Model):
     __searchable__ = ['body']
@@ -273,7 +281,6 @@ class Notification(db.Model):
 
     def get_data(self):
         return json.loads(str(self.payload_json))
-
 
 
 # We register a user loader function with Flask-Login

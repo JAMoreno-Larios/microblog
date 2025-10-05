@@ -5,7 +5,7 @@ from flask import (
 from flask_login import current_user, login_required
 from flask_babel import get_locale, _
 import sqlalchemy as sa
-from app.models import db, User, Post, Message
+from app.models import db, User, Post, Message, Notification
 from .forms import (EditProfileForm, EmptyForm, PostForm,
                     SearchForm, MessageForm)
 from datetime import datetime, timezone
@@ -224,6 +224,8 @@ def send_message(recipient):
         msg = Message(author=current_user, recipient=user,
                       body=form.message.data)
         db.session.add(msg)
+        user.add_notification('unread_message_count',
+                              user.unread_message_count())
         db.session.commit()
         flash(_('Your message has been sent.'))
         return redirect(url_for('routes.user', username=recipient))
@@ -236,6 +238,7 @@ def send_message(recipient):
 @login_required
 def messages():
     current_user.last_message_read_time = datetime.now(timezone.utc)
+    current_user.add_notification('unread_message_count', 0)
     db.session.commit()
     page = request.args.get('page', 1, type=int)
     query = current_user.messages_received.select().order_by(
@@ -250,3 +253,18 @@ def messages():
     return render_template('messages.html', messages=messages.items,
                            next_url=next_url, prev_url=prev_url)
 
+
+# Add the notification view function
+@routes_bp.route('/notifications')
+@login_required
+def notifications():
+    since = request.args.get('since', 0.0, type=float)
+    query = current_user.notifications.select().where(
+        Notification.timestamp > since).order_by(
+        Notification.timestamp.asc())
+    notifications = db.session.scalars(query)
+    return [{
+            'name': n.name,
+            'data': n.get_data(),
+            'timestamp': n.timestamp
+            } for n in notifications]

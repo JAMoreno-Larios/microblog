@@ -8,7 +8,7 @@ Slightly modified by J. A. Moreno-Larios
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import create_app
-from app.models import db, User, Post
+from app.models import db, User, Post, Message, Notification
 from app.translate import translate
 
 # Create Flask app instance
@@ -19,4 +19,5 @@ app = create_app()
 @app.shell_context_processor
 def make_shell_context():
     return {'sa': sa, 'so': so, 'db': db, 'User': User, 'Post': Post,
-            'translate': translate}
+            'translate': translate, 'Message': Message,
+            'Notification': Notification}
