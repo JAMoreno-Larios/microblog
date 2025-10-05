@@ -50,6 +50,12 @@
 				<a class="nav-link" aria-current="page"
 									href="{{ url_for('routes.messages') }}">
 					{{ _('Messages') }}
+					{% set unread_message_count = current_user.unread_message_count() %}
+					{% if unread_message_count != 0 %}
+					<span class="badge text-bg-danger">
+						{{ unread_message_count }}
+					</span>
+					{% endif %}
 				</a>
 			</li>
             <li class="nav-item">
