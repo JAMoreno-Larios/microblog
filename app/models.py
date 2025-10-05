@@ -263,7 +263,7 @@ class Message(db.Model):
 # Notification model
 class Notification(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    name: so.Mapped[str] = so.mapped_column(sa.string(128), index=True)
+    name: so.Mapped[str] = so.mapped_column(sa.String(128), index=True)
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(user.id),
                                                index=True)
     timestamp: so.Mapped[float] = so.mapped_column(index=True, default=time)
