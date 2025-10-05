@@ -9,6 +9,8 @@ app.db.back
 logs/**
 # We don't want to track the extracted messages file generated with pybabel
 **/*.pot
+# We don't want to track the compiled translations made with pybabel
+**/*.mo
 # We don't want to include the file where our API keys are declared
 **/.env
 # We want to exclude the local VMs generated with Vagrant
