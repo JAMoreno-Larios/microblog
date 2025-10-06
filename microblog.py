@@ -14,6 +14,8 @@ from app.translate import translate
 # Create Flask app instance
 app = create_app()
 
+# Get the Celery instance, we will point our worker to this part
+celery_app = app.extensions["celery"]
 
 # Define the shell context for interactive sessions
 @app.shell_context_processor

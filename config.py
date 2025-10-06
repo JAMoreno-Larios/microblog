@@ -43,6 +43,13 @@ class Config:
     # Elasticsearch
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
 
+    # Celery
+    CELERY = dict(
+        broker_url="redis://localhost:6379/0",
+        result_backend="redis://localhost:6379/0",
+        task_ignore_result=True,
+    )
+
     def __class_getitem__(self, item):
         # Makes our class subscriptable
         return getattr(self, item)

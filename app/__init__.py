@@ -18,6 +18,8 @@ from .models import db, login, User, Post
 from .email import mail
 from .cli import translate_bp
 from .translate import translate
+from .tasks import example
+from celery import Celery, Task
 
 
 # Instantiate extensions outside the application factory
@@ -29,6 +31,20 @@ babel = Babel()
 # Define a function to get the locales
 def get_locale():
     return request.accept_languages.best_match(Config['LANGUAGES'])
+
+
+# Create and configure a Celery app
+def celery_init_app(app: Flask) -> Celery:
+    class FlaskTask(Task):
+        def __call__(self, *args: object, **kwargs: object) -> object:
+            with app.app_context():
+                return self.run(*args, **kwargs)
+
+    celery_app = Celery(app.name, task_cls=FlaskTask)
+    celery_app.config_from_object(app.config["CELERY"])
+    celery_app.set_default()
+    app.extensions["celery"] = celery_app
+    return celery_app
 
 
 # Define the application factory
@@ -54,6 +70,8 @@ def create_app(test_config=None):
     # Initialize Elasticsearch
     app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None
+    # Initialize Celery task queue
+    celery_init_app(app)
     # Force users to login when viewing protected pages
     login.login_view = 'auth.login'
     login.login_message = _l('Please log in to access this page.')
