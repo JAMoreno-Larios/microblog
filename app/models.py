@@ -16,6 +16,10 @@ from hashlib import md5
 import jwt
 from .search import add_to_index, remove_from_index, query_index
 import json
+from celery import shared_task
+from celery import current_app as celery_app
+from celery.result import AsyncResult
+from celery.exceptions import CeleryError
 
 
 # Initialize SQLAlchemy instance
@@ -129,6 +133,9 @@ class User(UserMixin, db.Model):
     notifications: so.WriteOnlyMapped['Notification'] = so.relationship(
         back_populates='user')
 
+    # Track what task the user is running
+    tasks: so.WriteOnlyMapped['Task'] = so.relationship(back_populates='user')
+
     def __repr__(self):
         return f'<User {self.username}>'
 
@@ -226,6 +233,27 @@ class User(UserMixin, db.Model):
         db.session.add(n)
         return n
 
+    # Task helper methods
+    def launch_task(self, name, description, *args, **kwargs):
+        # Submit the task to worker
+        result = celery_app.tasks[f'app.tasks.{name}'].apply_async(
+            args=args,
+            kwargs=kwargs
+        )
+        task = Task(id=result.id, name=name,
+                    description=description, user=self)
+        db.session.add(task)
+        return task
+
+    def get_tasks_in_progress(self):
+        query = self.tasks.select().where(Task.complete == False)
+        return db.session.scalars(query)
+
+    def get_task_in_progress(self, name):
+        query = self.tasks.select().where(Task.name == name,
+                                          Task.complete == False)
+        return db.session.scalar(query)
+
 
 class Post(SearchableMixin, db.Model):
     __searchable__ = ['body']
@@ -281,6 +309,28 @@ class Notification(db.Model):
 
     def get_data(self):
         return json.loads(str(self.payload_json))
+
+
+# Task model
+class Task(db.Model):
+    id: so.Mapped[str] = so.mapped_column(sa.String(36), primary_key=True)
+    name: so.Mapped[str] = so.mapped_column(sa.String(128), index=True)
+    description: so.Mapped[Optional[str]] = so.mapped_column(sa.String(128))
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id))
+    complete: so.Mapped[bool] = so.mapped_column(default=False)
+
+    user: so.Mapped[User] = so.relationship(back_populates='tasks')
+
+    def get_celery_task(self):
+        try:
+            result = AsyncResult(self.id)
+        except CeleryError:
+            return None
+        return result
+
+    def get_progress(self):
+        result = self.get_celery_task()
+        return result.info['current'] if result is not None else 100
 
 
 # We register a user loader function with Flask-Login

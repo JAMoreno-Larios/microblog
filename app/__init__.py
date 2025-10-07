@@ -71,7 +71,8 @@ def create_app(test_config=None):
     app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None
     # Initialize Celery task queue
-    celery_init_app(app)
+    celery_app = celery_init_app(app)
+    app.task_queue = celery_app.control.inspect()
     # Force users to login when viewing protected pages
     login.login_view = 'auth.login'
     login.login_message = _l('Please log in to access this page.')

@@ -48,6 +48,7 @@ class Config:
         broker_url="redis://localhost:6379/0",
         result_backend="redis://localhost:6379/0",
         task_ignore_result=True,
+        task_track_started=True
     )
 
     def __class_getitem__(self, item):
