@@ -3,7 +3,7 @@ Microblog SQL models with implemented via SQLAlchemy
 We define the User and Post models here
 """
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from time import time
 from typing import Optional
 import sqlalchemy as sa
@@ -19,6 +19,7 @@ import json
 from celery import current_app as celery_app
 from celery.result import AsyncResult
 from celery.exceptions import CeleryError
+import secrets
 
 
 # Initialize SQLAlchemy instance
@@ -164,6 +165,11 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 
     # Track what task the user is running
     tasks: so.WriteOnlyMapped['Task'] = so.relationship(back_populates='user')
+
+    # Add support for user tokens.
+    token: so.Mapped[Optional[str]] = so.mapped_column(
+        sa.String(32), index=True, unique=True)
+    token_expiration: so.Mapped[Optional[datetime]]
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -321,6 +327,31 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
                 setattr(self, field, data[field])
         if new_user and 'password' in data:
             self.set_password(data['password'])
+
+    # User tokens
+    def get_token(self, expires_in=3600):
+        now = datetime.now(timezone.utc)
+        if self.token and self.token_expiration.replace(
+            tzinfo=timezone.utc
+        ) > now + timedelta(seconds=60):
+            return self.token
+        self.token = secrets.token_hex(16)
+        self.token_expiration = now + timedelta(seconds=expires_in)
+        db.session.add(self)
+        return self.token
+
+    def revoke_token(self):
+        self.token_expiration = datetime.now(timezone.utc) - timedelta(
+                seconds=1)
+
+    @staticmethod
+    def check_token(token):
+        user = db.session.scalar(sa.select(User).where(User.token == token))
+        if user is None or user.token_expiration.replace(
+            tzinfo=timezone.utc
+        ) < datetime.now(timezone.utc):
+            return None
+        return user
 
 
 class Post(SearchableMixin, db.Model):
