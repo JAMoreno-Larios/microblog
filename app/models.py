@@ -84,7 +84,37 @@ db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit)
 db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit)
 
 
-class User(UserMixin, db.Model):
+# Paginated representation mixin class
+class PaginatedAPIMixin(object):
+    @staticmethod
+    def to_collection_dict(query, page, per_page, endpoint, **kwargs):
+        resources = db.paginate(query, page=page, per_page=per_page,
+                                error_out=False)
+        data = {
+                'items': [item.to_dict() for item in resources.items],
+                '_meta': {
+                    'page': page,
+                    'per_page': per_page,
+                    'total_pages': resources.pages,
+                    'total_items': resources.total
+                },
+                '_links': {
+                    'self': url_for(endpoint, page=page,
+                                    per_page=per_page, **kwargs),
+                    'next': url_for(
+                        endpoint, page=page + 1,
+                        per_page=per_page,
+                        **kwargs) if resources.has_next else None,
+                    'prev': url_for(
+                        endpoint, page=page - 1,
+                        per_page=per_page,
+                        **kwargs) if resources.has_prev else None,
+                    }
+        }
+        return data
+
+
+class User(PaginatedAPIMixin, UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64),
                                                 index=True,
@@ -369,36 +399,6 @@ class Task(db.Model):
     def get_progress(self):
         result = self.get_celery_task()
         return result.info['current'] if result is not None else 100
-
-
-# Paginated representation mixin class
-class PaginatedAPIMixin(object):
-    @staticmethod
-    def to_collection_dict(query, page, per_page, endpoint, **kwargs):
-        resources = db.paginate(query, page=page, per_page=per_page,
-                                error_out=False)
-        data = {
-                'items': [item.to_dict() for item in resources.items],
-                '_meta': {
-                    'page': page,
-                    'per_page': per_page,
-                    'total_pages': resources.pages,
-                    'total_items': resources.total
-                },
-                '_links': {
-                    'self': url_for(endpoint, page=page,
-                                    per_page=per_page, **kwargs),
-                    'next': url_for(
-                        endpoint, page=page + 1,
-                        per_page=per_page,
-                        **kwargs) if resources.has_next else None,
-                    'prev': url_for(
-                        endpoint, page=page - 1,
-                        per_page=per_page,
-                        **kwargs) if resources.has_prev else None,
-                    }
-        }
-        return data
 
 
 # We register a user loader function with Flask-Login
