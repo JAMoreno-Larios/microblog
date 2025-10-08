@@ -302,10 +302,10 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
                 'follower_count': self.followers_count(),
                 'following_count': self.following_count(),
                 '_links': {
-                    'self': url_for('api.user.get_user', id=self.id),
-                    'followers': url_for('api.user.get_followers',
+                    'self': url_for('api.users.get_user', id=self.id),
+                    'followers': url_for('api.users.get_followers',
                                          id=self.id),
-                    'following': url_for('api.user.get_following',
+                    'following': url_for('api.users.get_following',
                                          id=self.id),
                     'avatar': self.avatar(128)
                 }
