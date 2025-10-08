@@ -16,7 +16,6 @@ from hashlib import md5
 import jwt
 from .search import add_to_index, remove_from_index, query_index
 import json
-from celery import shared_task
 from celery import current_app as celery_app
 from celery.result import AsyncResult
 from celery.exceptions import CeleryError
@@ -236,9 +235,10 @@ class User(UserMixin, db.Model):
     # Task helper methods
     def launch_task(self, name, description, *args, **kwargs):
         # Submit the task to worker
+        args = (self.id, *args)
         result = celery_app.tasks[f'app.tasks.{name}'].apply_async(
-            args=args,
-            kwargs=kwargs
+            args,
+            kwargs
         )
         task = Task(id=result.id, name=name,
                     description=description, user=self)
