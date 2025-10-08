@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-05 09:35-0600\n"
+"POT-Creation-Date: 2025-10-08 08:36-0600\n"
 "PO-Revision-Date: 2025-10-04 12:04-0600\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: J. A. Moreno <EMAIL@ADDRESS>\n"
 "Language: es\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/__init__.py:59
+#: app/__init__.py:77
 msgid "Please log in to access this page."
 msgstr "Inicie sesión para acceder a la página"
 
@@ -141,13 +141,21 @@ msgstr "Usuario"
 msgid "Message"
 msgstr "Mensaje"
 
-#: app/main/routes.py:228
+#: app/main/routes.py:230
 msgid "Your message has been sent."
 msgstr "Su mensaje ha sido enviado."
 
-#: app/main/routes.py:230
+#: app/main/routes.py:232
 msgid "Send Message"
 msgstr "Enviar mensaje"
+
+#: app/main/routes.py:278
+msgid "An export task is currently in progress"
+msgstr "Ya existe una tarea de exportación en progreso"
+
+#: app/main/routes.py:280
+msgid "Exporting posts..."
+msgstr "Exportando publicaciones..."
 
 #: app/templates/_post.html:15
 #, python-format
@@ -178,11 +186,11 @@ msgstr "Inicie sesión"
 msgid "Messages"
 msgstr "Mensajes"
 
-#: app/templates/base.html:56
+#: app/templates/base.html:61
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/base.html:59
+#: app/templates/base.html:64
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -196,12 +204,12 @@ msgid "Hi, %(username)s!"
 msgstr "¡Hola, %(username)s!"
 
 #: app/templates/index.html:16 app/templates/search.html:12
-#: app/templates/user.html:69
+#: app/templates/user.html:77
 msgid "Newer posts"
 msgstr "Nuevas publicaciones"
 
 #: app/templates/index.html:21 app/templates/search.html:17
-#: app/templates/user.html:74
+#: app/templates/user.html:82
 msgid "Older posts"
 msgstr "Publicaciones anteriores"
 
@@ -246,15 +254,20 @@ msgstr "%(count)d seguidos"
 msgid "Edit your profile"
 msgstr "Edite su perfil"
 
-#: app/templates/user.html:33 app/templates/user_popup.html:22
+#: app/templates/user.html:29
+#, fuzzy
+msgid "Export your posts"
+msgstr "¿Olvidó su contraseña?"
+
+#: app/templates/user.html:41 app/templates/user_popup.html:22
 msgid "Follow"
 msgstr "Seguir"
 
-#: app/templates/user.html:44 app/templates/user_popup.html:31
+#: app/templates/user.html:52 app/templates/user_popup.html:31
 msgid "Unfollow"
 msgstr "Dejar de seguir"
 
-#: app/templates/user.html:53
+#: app/templates/user.html:61
 msgid "Send private message"
 msgstr "Mandar mensaje privado"
 
