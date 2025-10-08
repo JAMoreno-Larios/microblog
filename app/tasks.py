@@ -46,19 +46,6 @@ def _set_task_progress(celery_task, progress):
         db.session.commit()
 
 
-@shared_task(bind=True)
-def example(self, seconds):
-    print('Starting task')
-    for i in range(seconds):
-        self.update_state(state='PROGRESS',
-                          meta={'current': 100.0 * i / seconds,
-                                'total': 100}
-                          )
-        print(i)
-        time.sleep(1)
-    print("Task completed")
-
-
 # Implement the Export task
 @shared_task(bind=True)
 def export_posts(self, user_id):
