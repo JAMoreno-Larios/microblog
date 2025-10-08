@@ -14,6 +14,7 @@ from elasticsearch import Elasticsearch
 from app.errors import errors_bp
 from app.auth import auth_bp
 from app.main import routes_bp
+from app.api import api_bp
 from .models import db, login, User, Post
 from .email import mail
 from .cli import translate_bp
@@ -66,6 +67,7 @@ def create_app(test_config=None):
     app.register_blueprint(errors_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(translate_bp)
+    app.register_blueprint(api_bp)
     # Initialize Elasticsearch
     app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None
