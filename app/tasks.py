@@ -67,7 +67,7 @@ def export_posts(self, user_id):
         user = db.session.get(User, user_id)
         _set_task_progress(self, 0)
         data = []
-        index = 0
+        counter = 0
         total_posts = db.session.scalar(
                 sa.select(
                     sa.func.count()
@@ -83,7 +83,8 @@ def export_posts(self, user_id):
             data.append({'body': post.body,
                         'timestamp': post.timestamp.isoformat() + 'Z'})
             time.sleep(5)
-            _set_task_progress(self, 100 * index // total_posts)
+            counter = counter + 1
+            _set_task_progress(self, (100 * counter) // total_posts)
         # send email
         send_email(
             '[Microblog] Your blog posts',
