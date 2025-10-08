@@ -18,7 +18,6 @@ from .models import db, login, User, Post
 from .email import mail
 from .cli import translate_bp
 from .translate import translate
-from .tasks import example
 from celery import Celery, Task
 
 
