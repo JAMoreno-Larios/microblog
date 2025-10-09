@@ -2,21 +2,24 @@
 User API definitions
 """
 
-from flask import Blueprint, request, url_for
+from flask import Blueprint, request, url_for, abort
 from app.models import db, User
 import sqlalchemy as sa
 from .errors import bad_request
+from .auth import token_auth
 
 # This blueprint will be nested into api
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 
 
 @users_bp.route('<int:id>', methods=['GET'])
+@token_auth.login_required
 def get_user(id):
     return db.get_or_404(User, id).to_dict()
 
 
 @users_bp.route('/', methods=['GET'])
+@token_auth.login_required
 def get_users():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
@@ -26,6 +29,7 @@ def get_users():
 
 
 @users_bp.route('<int:id>/followers', methods=['GET'])
+@token_auth.login_required
 def get_followers(id):
     user = db.get_or_404(User, id)
     page = request.args.get('page', 1, type=int)
@@ -35,6 +39,7 @@ def get_followers(id):
 
 
 @users_bp.route('<int:id>/following', methods=['GET'])
+@token_auth.login_required
 def get_following(id):
     user = db.get_or_404(User, id)
     page = request.args.get('page', 1, type=int)
@@ -73,7 +78,10 @@ def create_user():
 
 
 @users_bp.route('<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_user(id):
+    if token_auth.current_user().id != id:
+        abort(403)
     user = db.get_or_404(User, id)
     data = request.get_json()
     if 'username' in data and data['username'] != user.username and \
