@@ -51,6 +51,17 @@ $ sudo docker run --name elasticsearch --network elastic \
 
 ```
 
+## Celery
+We use Celery as our task queue. In addition to that, we need either a
+Redis or Valkey server up and running.
+
+To get our Celery worker started, we need to
+
+```bash
+$ celery -A microblog.celery_app worker --loglevel INFO
+```
+on our root directory.
+
 ## Deploying with Vagrant and Ubuntu Linux
 To create the VM with the provided `Vagrantfile`:
 ```bash
