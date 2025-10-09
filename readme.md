@@ -30,7 +30,7 @@ $ source venv/bin/activate
 $ [venv] pip install -r requirements.txt
 ```
 
-# Execution
+## Execution
 Run `flask run` on the top-level directory
 
 
@@ -102,3 +102,7 @@ We now compile the language translations
 
 To set up the MySQL server, supervisor and nginx, please
 refer to [Miguel's tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux) 
+
+# Next steps
+I should figure out how to automate the app deployment, either to a
+Linux box or using a multi-container solution such as Docker Compose.
